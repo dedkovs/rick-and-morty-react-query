@@ -1,3 +1,5 @@
+// entities
+
 export type CHARACTER_NAME_CHANGED = 'CHARACTER_NAME_CHANGED';
 
 export interface InitialState {
@@ -21,6 +23,11 @@ export interface CharacterInfo {
   pages: number;
   prev: string | null;
 }
+export enum characterStatuses {
+  Alive = 'Alive',
+  Dead = 'Dead',
+  unknown = 'unknown',
+}
 
 export interface Character {
   created: string;
@@ -32,7 +39,7 @@ export interface Character {
   name: string;
   origin: CharacterOrigin;
   species: string;
-  status: string;
+  status: characterStatuses;
   type: string;
   url: string;
 }
