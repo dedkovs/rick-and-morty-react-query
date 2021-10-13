@@ -1,7 +1,6 @@
 import { all } from 'redux-saga/effects';
-import { watchCharacterNameChanged } from './watchCharacterNameChanged';
-import { watchPageNumberChanged } from './watchPageNumberChanged';
+import { watchGetData } from './watchGetData';
 
 export function* rootSaga() {
-  yield all([watchCharacterNameChanged(), watchPageNumberChanged()]);
+  yield all([watchGetData()]);
 }
