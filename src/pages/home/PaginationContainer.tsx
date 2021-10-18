@@ -9,14 +9,21 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 const PaginationContainerStyle = {
   display: 'block',
   width: 'fit-content',
-  margin: '24px auto',
-};
+  margin: '0 auto',
+  marginTop: 4,
+} as const;
 
 const PaginationContainer: FC = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const data = useAppSelector((state) => state.characters.data);
+  const totalResultsCount = useAppSelector(
+    (state) => state.characters.data.totalResultsCount
+  );
+
+  const pagesCount = useAppSelector(
+    (state) => state.characters.data.pagesCount
+  );
 
   const currentPage = useAppSelector((state) => state.characters.filters.page);
 
@@ -25,13 +32,22 @@ const PaginationContainer: FC = () => {
   const handleChange = (e: ChangeEvent<unknown>, page: number) => {
     if (currentPage !== page) {
       dispatch(getDataTrigger({ page }));
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      });
     }
   };
 
-  return data.length > 0 ? ( //
-    // if data.length === 0 ...
+  return totalResultsCount > 0 ? (
     <Box sx={PaginationContainerStyle}>
-      <Pagination handleChange={handleChange} siblingCount={matches ? 1 : 0} />
+      <Pagination
+        handleChange={handleChange}
+        pagesCount={pagesCount}
+        page={currentPage}
+        siblingCount={matches ? 1 : 0}
+      />
     </Box>
   ) : null;
 };
